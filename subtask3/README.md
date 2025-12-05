@@ -10,7 +10,13 @@ In subtask 3, the goal is to determine the manifestation type of the poloarizing
 
 Soruce: https://arxiv.org/pdf/2505.20624
 
-This paper benchmarkes the performance of multiple models for each of the subtasks, both in monolingual and multilingual settings. Below is the results of the of the various models for this given subtask (Manifestation Subtask), based on the average F1 score:
+This paper benchmarkes the performance of multiple models (both MLMs and LLMs) for each of the subtasks, both in monolingual and multilingual settings. 
 
-![Results Table Header](./03-ResultsTableHeader.png)
-![Results Table Data](./03-ResultsTableData.png)
+Below is the results of the of the various MLMs for this given subtask (Manifestation Subtask), based on the average F1 score:
+
+![Results Table Header](./03-ResultsTableHeaderMLM.png)
+![Results Table Data](./03-ResultsTableDataMLM.png)    
+
+And here are the results for the LLMs:
+
+![Results Table Header](./03-ResultsTableLLM.png)

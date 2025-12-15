@@ -1,0 +1,227 @@
+# Subtask 3: Manifestation Identification (Multi-label Classification)
+# Configuration file for all models and training parameters
+
+# ============================================================================
+# DATA CONFIGURATION
+# ============================================================================
+data:
+  train_path: "data/train"
+  dev_path: "data/dev"
+  test_path: null
+  languages: ["eng", "arb"]
+  random_seed: 42
+  stratify: true
+  multilabel: true
+
+# ============================================================================
+# TASK CONFIGURATION
+# ============================================================================
+task:
+  task_name: "Subtask3_Manifestation"
+  task_type: "multi_label_classification"
+  num_classes: 6
+  labels:
+    - "stereotype"
+    - "vilification"
+    - "dehumanization"
+    - "extreme_language"
+    - "lack_of_empathy"
+    - "invalidation"
+  label_columns: ["stereotype", "vilification", "dehumanization", "extreme_language", "lack_of_empathy", "invalidation"]
+  text_column: "text"
+  id_column: "id"
+  threshold: 0.5
+
+# ============================================================================
+# SVM (STATISTICAL MODEL) - BASELINE
+# ============================================================================
+svm:
+  enabled: true
+  model_name: "SVM_MultiLabel_TF-IDF"
+  model_type: "sklearn_multilabel"
+  
+  # Feature extraction
+  vectorizer:
+    type: "tfidf"
+    max_features: 5000
+    ngram_range: [1, 2]
+    min_df: 2
+    max_df: 0.95
+    lowercase: true
+    stop_words: "english"
+  
+  # SVM parameters
+  svm_params:
+    kernel: "rbf"
+    C: 1.0
+    gamma: "scale"
+    class_weight: "balanced"
+    max_iter: 1000
+    probability: true
+    random_state: 42
+  
+  # Multi-label strategy
+  multilabel_strategy: "one_vs_rest"
+  
+  # Training
+  training:
+    batch_size: null
+    epochs: 1
+    validation_split: 0.1
+    early_stopping: false
+    verbose: true
+  
+  # Output
+  output_dir: "subtask3/models/svm"
+  save_model: true
+  model_format: "pickle"
+
+# ============================================================================
+# XLM-RoBERTa
+# ============================================================================
+xlm_roberta:
+  enabled: true
+  model_name: "xlm-roberta-base"
+  model_type: "transformer"
+  pretrained_model: "xlm-roberta-base"
+  
+  # Tokenizer
+  tokenizer:
+    max_length: 256
+    padding: "max_length"
+    truncation: true
+    add_special_tokens: true
+  
+  # Model architecture
+  model:
+    num_labels: 6
+    hidden_dropout_prob: 0.1
+    attention_probs_dropout_prob: 0.1
+    output_attentions: false
+    output_hidden_states: false
+    problem_type: "multi_label_classification"
+  
+  # Training parameters
+  training:
+    batch_size: 16
+    epochs: 3
+    learning_rate: 2e-5
+    warmup_steps: 500
+    weight_decay: 0.01
+    gradient_accumulation_steps: 1
+    max_grad_norm: 1.0
+    validation_split: 0.1
+    early_stopping: true
+    early_stopping_patience: 2
+    eval_steps: 100
+    save_steps: 500
+    logging_steps: 50
+    optimizer: "adamw"
+    scheduler: "linear"
+    verbose: true
+    loss_function: "bce_with_logits"
+  
+  # Device configuration
+  device:
+    use_cuda: true
+    device_ids: [0]
+    mixed_precision: "no"
+  
+  # Output
+  output_dir: "subtask3/models/xlm_roberta"
+  save_model: true
+  save_tokenizer: true
+  model_format: "huggingface"
+  save_best_only: true
+
+# ============================================================================
+# RemBERT
+# ============================================================================
+rembert:
+  enabled: true
+  model_name: "rembert"
+  model_type: "transformer"
+  pretrained_model: "google/rembert"
+  
+  # Tokenizer
+  tokenizer:
+    max_length: 256
+    padding: "max_length"
+    truncation: true
+    add_special_tokens: true
+  
+  # Model architecture
+  model:
+    num_labels: 6
+    hidden_dropout_prob: 0.1
+    attention_probs_dropout_prob: 0.1
+    output_attentions: false
+    output_hidden_states: false
+    problem_type: "multi_label_classification"
+  
+  # Training parameters
+  training:
+    batch_size: 16
+    epochs: 3
+    learning_rate: 2e-5
+    warmup_steps: 500
+    weight_decay: 0.01
+    gradient_accumulation_steps: 1
+    max_grad_norm: 1.0
+    validation_split: 0.1
+    early_stopping: true
+    early_stopping_patience: 2
+    eval_steps: 100
+    save_steps: 500
+    logging_steps: 50
+    optimizer: "adamw"
+    scheduler: "linear"
+    verbose: true
+    loss_function: "bce_with_logits"
+  
+  # Device configuration
+  device:
+    use_cuda: true
+    device_ids: [0]
+    mixed_precision: "no"
+  
+  # Output
+  output_dir: "subtask3/models/rembert"
+  save_model: true
+  save_tokenizer: true
+  model_format: "huggingface"
+  save_best_only: true
+
+# ============================================================================
+# EVALUATION CONFIGURATION
+# ============================================================================
+evaluation:
+  metrics: ["hamming_loss", "accuracy", "precision", "recall", "f1", "auc_roc"]
+  average: "weighted"
+  report_per_label: true
+  report_per_language: true
+  threshold: 0.5
+  save_predictions: true
+  predictions_format: "csv"
+
+# ============================================================================
+# LOGGING AND CHECKPOINTING
+# ============================================================================
+logging:
+  log_level: "INFO"
+  log_dir: "logs"
+  log_file: "training.log"
+  save_best_model: true
+  checkpoint_dir: "checkpoints"
+
+# ============================================================================
+# GENERAL CONFIGURATION
+# ============================================================================
+general:
+  seed: 42
+  num_workers: 4
+  pin_memory: true
+  deterministic: true
+  verbose: true
+  experiment_name: "subtask3_manifestation"
+  timestamp: true

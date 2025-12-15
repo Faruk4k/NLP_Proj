@@ -1,0 +1,4 @@
+2025-12-10 23:40:05,911 - shared_utils.utils - INFO - Logging initialized. Log file: logs\training_20251210_234005.log
+2025-12-10 23:40:05,911 - shared_utils.utils - INFO - Starting Subtask 1: Polarization Detection
+2025-12-10 23:40:05,911 - shared_utils.utils - INFO - Device info: {'cuda_available': False, 'cuda_device_count': 0, 'cuda_version': None, 'device': 'cpu'}
+2025-12-10 23:40:05,911 - shared_utils.utils - INFO - Loading config from: config/config.yaml

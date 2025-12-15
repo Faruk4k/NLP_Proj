@@ -1,0 +1,249 @@
+2025-12-11 00:40:54,471 - shared_utils.utils - INFO - Logging initialized. Log file: logs\training_20251211_004054.log
+2025-12-11 00:40:54,472 - shared_utils.utils - INFO - Starting Subtask 2: Polarization Type Classification
+2025-12-11 00:40:54,472 - shared_utils.utils - INFO - Device info: {'cuda_available': False, 'cuda_device_count': 0, 'cuda_version': None, 'device': 'cpu'}
+2025-12-11 00:40:54,472 - shared_utils.utils - INFO - Loading config from: subtask2/config/config.yaml
+2025-12-11 00:40:54,477 - shared_utils.utils - INFO - Configuration:
+{
+  "data": {
+    "train_path": "subtask2/data/train",
+    "dev_path": "subtask2/data/dev",
+    "test_path": null,
+    "languages": [
+      "eng",
+      "arb"
+    ],
+    "random_seed": 42,
+    "stratify": true,
+    "multilabel": true
+  },
+  "task": {
+    "task_name": "Subtask2_PolarizationType",
+    "task_type": "multi_label_classification",
+    "num_classes": 5,
+    "labels": [
+      "political",
+      "racial/ethnic",
+      "religious",
+      "gender/sexual",
+      "other"
+    ],
+    "label_columns": [
+      "political",
+      "racial/ethnic",
+      "religious",
+      "gender/sexual",
+      "other"
+    ],
+    "text_column": "text",
+    "id_column": "id",
+    "threshold": 0.5
+  },
+  "svm": {
+    "enabled": true,
+    "model_name": "SVM_MultiLabel_TF-IDF",
+    "model_type": "sklearn_multilabel",
+    "vectorizer": {
+      "type": "tfidf",
+      "max_features": 5000,
+      "ngram_range": [
+        1,
+        2
+      ],
+      "min_df": 2,
+      "max_df": 0.95,
+      "lowercase": true,
+      "stop_words": "english"
+    },
+    "svm_params": {
+      "kernel": "rbf",
+      "C": 1.0,
+      "gamma": "scale",
+      "class_weight": "balanced",
+      "max_iter": 1000,
+      "probability": true,
+      "random_state": 42
+    },
+    "multilabel_strategy": "one_vs_rest",
+    "training": {
+      "batch_size": null,
+      "epochs": 1,
+      "validation_split": 0.1,
+      "early_stopping": false,
+      "verbose": true
+    },
+    "output_dir": "subtask2/models/svm",
+    "save_model": true,
+    "model_format": "pickle"
+  },
+  "xlm_roberta": {
+    "enabled": true,
+    "model_name": "xlm-roberta-base",
+    "model_type": "transformer",
+    "pretrained_model": "xlm-roberta-base",
+    "tokenizer": {
+      "max_length": 256,
+      "padding": "max_length",
+      "truncation": true,
+      "add_special_tokens": true
+    },
+    "model": {
+      "num_labels": 5,
+      "hidden_dropout_prob": 0.1,
+      "attention_probs_dropout_prob": 0.1,
+      "output_attentions": false,
+      "output_hidden_states": false,
+      "problem_type": "multi_label_classification"
+    },
+    "training": {
+      "batch_size": 16,
+      "epochs": 3,
+      "learning_rate": "2e-5",
+      "warmup_steps": 500,
+      "weight_decay": 0.01,
+      "gradient_accumulation_steps": 1,
+      "max_grad_norm": 1.0,
+      "validation_split": 0.1,
+      "early_stopping": true,
+      "early_stopping_patience": 2,
+      "eval_steps": 100,
+      "save_steps": 500,
+      "logging_steps": 50,
+      "optimizer": "adamw",
+      "scheduler": "linear",
+      "verbose": true,
+      "loss_function": "bce_with_logits"
+    },
+    "device": {
+      "use_cuda": true,
+      "device_ids": [
+        0
+      ],
+      "mixed_precision": "no"
+    },
+    "output_dir": "subtask2/models/xlm_roberta",
+    "save_model": true,
+    "save_tokenizer": true,
+    "model_format": "huggingface",
+    "save_best_only": true
+  },
+  "rembert": {
+    "enabled": true,
+    "model_name": "rembert",
+    "model_type": "transformer",
+    "pretrained_model": "google/rembert",
+    "tokenizer": {
+      "max_length": 256,
+      "padding": "max_length",
+      "truncation": true,
+      "add_special_tokens": true
+    },
+    "model": {
+      "num_labels": 5,
+      "hidden_dropout_prob": 0.1,
+      "attention_probs_dropout_prob": 0.1,
+      "output_attentions": false,
+      "output_hidden_states": false,
+      "problem_type": "multi_label_classification"
+    },
+    "training": {
+      "batch_size": 16,
+      "epochs": 3,
+      "learning_rate": "2e-5",
+      "warmup_steps": 500,
+      "weight_decay": 0.01,
+      "gradient_accumulation_steps": 1,
+      "max_grad_norm": 1.0,
+      "validation_split": 0.1,
+      "early_stopping": true,
+      "early_stopping_patience": 2,
+      "eval_steps": 100,
+      "save_steps": 500,
+      "logging_steps": 50,
+      "optimizer": "adamw",
+      "scheduler": "linear",
+      "verbose": true,
+      "loss_function": "bce_with_logits"
+    },
+    "device": {
+      "use_cuda": true,
+      "device_ids": [
+        0
+      ],
+      "mixed_precision": "no"
+    },
+    "output_dir": "subtask2/models/rembert",
+    "save_model": true,
+    "save_tokenizer": true,
+    "model_format": "huggingface",
+    "save_best_only": true
+  },
+  "evaluation": {
+    "metrics": [
+      "hamming_loss",
+      "accuracy",
+      "precision",
+      "recall",
+      "f1",
+      "auc_roc"
+    ],
+    "average": "weighted",
+    "report_per_label": true,
+    "report_per_language": true,
+    "threshold": 0.5,
+    "save_predictions": true,
+    "predictions_format": "csv"
+  },
+  "logging": {
+    "log_level": "INFO",
+    "log_dir": "logs",
+    "log_file": "training.log",
+    "save_best_model": true,
+    "checkpoint_dir": "checkpoints"
+  },
+  "general": {
+    "seed": 42,
+    "num_workers": 4,
+    "pin_memory": true,
+    "deterministic": true,
+    "verbose": true,
+    "experiment_name": "subtask2_polarization_type",
+    "timestamp": true
+  }
+}
+2025-12-11 00:40:54,483 - shared_utils.utils - INFO - Loading data...
+2025-12-11 00:40:54,492 - shared_utils.data_loader - INFO - Loaded 2676 samples from subtask2\data\train\eng.csv
+2025-12-11 00:40:54,510 - shared_utils.data_loader - INFO - Loaded 3380 samples from subtask2\data\train\arb.csv
+2025-12-11 00:40:54,511 - shared_utils.data_loader - WARNING - Split directory not found: subtask2\data\test
+2025-12-11 00:40:54,512 - shared_utils.data_loader - INFO - Loaded 133 samples from subtask2\data\dev\eng.csv
+2025-12-11 00:40:54,516 - shared_utils.data_loader - INFO - Loaded 169 samples from subtask2\data\dev\arb.csv
+2025-12-11 00:40:54,516 - shared_utils.utils - INFO - 
+============================================================
+2025-12-11 00:40:54,516 - shared_utils.utils - INFO - TRAINING MODELS FOR LANGUAGE: ENG
+2025-12-11 00:40:54,516 - shared_utils.utils - INFO - ============================================================
+2025-12-11 00:40:54,519 - shared_utils.utils - INFO - Train set size (eng): 2676
+2025-12-11 00:40:54,519 - shared_utils.data_loader - INFO - 
+==================================================
+2025-12-11 00:40:54,519 - shared_utils.data_loader - INFO - Statistics for language_eng split
+2025-12-11 00:40:54,519 - shared_utils.data_loader - INFO - ==================================================
+2025-12-11 00:40:54,519 - shared_utils.data_loader - INFO - 
+Language: train
+2025-12-11 00:40:54,528 - shared_utils.data_loader - INFO -   total_samples: 2676
+2025-12-11 00:40:54,529 - shared_utils.data_loader - INFO -   languages: {'eng': 2676}
+2025-12-11 00:40:54,529 - shared_utils.data_loader - INFO -   avg_text_length: 12.379297458893872
+2025-12-11 00:40:54,529 - shared_utils.data_loader - INFO -   min_text_length: 4
+2025-12-11 00:40:54,529 - shared_utils.data_loader - INFO -   max_text_length: 60
+2025-12-11 00:40:54,530 - shared_utils.data_loader - INFO -   political_distribution: {0: 1680, 1: 996}
+2025-12-11 00:40:54,530 - shared_utils.data_loader - INFO -   racial/ethnic_distribution: {0: 2412, 1: 264}
+2025-12-11 00:40:54,530 - shared_utils.data_loader - INFO -   religious_distribution: {0: 2570, 1: 106}
+2025-12-11 00:40:54,530 - shared_utils.data_loader - INFO -   gender/sexual_distribution: {0: 2609, 1: 67}
+2025-12-11 00:40:54,530 - shared_utils.data_loader - INFO -   other_distribution: {0: 2555, 1: 121}
+2025-12-11 00:40:54,530 - shared_utils.utils - INFO - 
+--- Training SVM for ENG ---
+2025-12-11 00:40:54,530 - shared_utils.utils - INFO - ==================================================
+2025-12-11 00:40:54,530 - shared_utils.utils - INFO - Training SVM Model for ENG
+2025-12-11 00:40:54,531 - shared_utils.utils - INFO - ==================================================
+2025-12-11 00:40:54,567 - shared_utils.utils - INFO - Vectorizing text...
+2025-12-11 00:40:54,611 - shared_utils.utils - INFO - Fitting SVM multi-label model on full training data...
+2025-12-11 00:40:59,594 - shared_utils.utils - INFO - Model saved to subtask2/models/svm\svm_eng.joblib
+2025-12-11 00:40:59,594 - shared_utils.utils - INFO - 
+--- Making predictions with SVM for ENG ---

@@ -1,0 +1,236 @@
+2025-12-11 00:23:42,125 - shared_utils.utils - INFO - Logging initialized. Log file: logs\training_20251211_002342.log
+2025-12-11 00:23:42,125 - shared_utils.utils - INFO - Starting Subtask 1: Polarization Detection
+2025-12-11 00:23:42,125 - shared_utils.utils - INFO - Device info: {'cuda_available': False, 'cuda_device_count': 0, 'cuda_version': None, 'device': 'cpu'}
+2025-12-11 00:23:42,125 - shared_utils.utils - INFO - Loading config from: subtask1/config/config.yaml
+2025-12-11 00:23:42,137 - shared_utils.utils - INFO - Configuration:
+{
+  "data": {
+    "train_path": "subtask1/data/train",
+    "test_path": "subtask1/data/test",
+    "dev_path": null,
+    "languages": [
+      "eng",
+      "arb"
+    ],
+    "random_seed": 42,
+    "stratify": true
+  },
+  "task": {
+    "task_name": "Subtask1_PolarizationDetection",
+    "task_type": "binary_classification",
+    "num_classes": 2,
+    "labels": {
+      "0": "non-polarized",
+      "1": "polarized"
+    },
+    "label_column": "polarization",
+    "text_column": "text",
+    "id_column": "id"
+  },
+  "svm": {
+    "enabled": true,
+    "model_name": "SVM_TF-IDF",
+    "model_type": "sklearn",
+    "vectorizer": {
+      "type": "tfidf",
+      "max_features": 5000,
+      "ngram_range": [
+        1,
+        2
+      ],
+      "min_df": 2,
+      "max_df": 0.95,
+      "lowercase": true,
+      "stop_words": "english"
+    },
+    "svm_params": {
+      "kernel": "rbf",
+      "C": 1.0,
+      "gamma": "scale",
+      "class_weight": "balanced",
+      "max_iter": 1000,
+      "probability": true,
+      "random_state": 42
+    },
+    "training": {
+      "batch_size": null,
+      "epochs": 1,
+      "validation_split": 0.1,
+      "early_stopping": false,
+      "verbose": true
+    },
+    "output_dir": "subtask1/models/svm",
+    "save_model": true,
+    "model_format": "pickle"
+  },
+  "xlm_roberta": {
+    "enabled": true,
+    "model_name": "xlm-roberta-base",
+    "model_type": "transformer",
+    "pretrained_model": "xlm-roberta-base",
+    "tokenizer": {
+      "max_length": 256,
+      "padding": "max_length",
+      "truncation": true,
+      "add_special_tokens": true
+    },
+    "model": {
+      "num_labels": 2,
+      "hidden_dropout_prob": 0.1,
+      "attention_probs_dropout_prob": 0.1,
+      "output_attentions": false,
+      "output_hidden_states": false
+    },
+    "training": {
+      "batch_size": 16,
+      "epochs": 3,
+      "learning_rate": "2e-5",
+      "warmup_steps": 500,
+      "weight_decay": 0.01,
+      "gradient_accumulation_steps": 1,
+      "max_grad_norm": 1.0,
+      "validation_split": 0.1,
+      "early_stopping": true,
+      "early_stopping_patience": 2,
+      "eval_steps": 100,
+      "save_steps": 500,
+      "logging_steps": 50,
+      "optimizer": "adamw",
+      "scheduler": "linear",
+      "verbose": true
+    },
+    "device": {
+      "use_cuda": true,
+      "device_ids": [
+        0
+      ],
+      "mixed_precision": "no"
+    },
+    "output_dir": "subtask1/models/xlm_roberta",
+    "save_model": true,
+    "save_tokenizer": true,
+    "model_format": "huggingface",
+    "save_best_only": true
+  },
+  "rembert": {
+    "enabled": true,
+    "model_name": "rembert",
+    "model_type": "transformer",
+    "pretrained_model": "google/rembert",
+    "tokenizer": {
+      "max_length": 256,
+      "padding": "max_length",
+      "truncation": true,
+      "add_special_tokens": true
+    },
+    "model": {
+      "num_labels": 2,
+      "hidden_dropout_prob": 0.1,
+      "attention_probs_dropout_prob": 0.1,
+      "output_attentions": false,
+      "output_hidden_states": false
+    },
+    "training": {
+      "batch_size": 16,
+      "epochs": 3,
+      "learning_rate": "2e-5",
+      "warmup_steps": 500,
+      "weight_decay": 0.01,
+      "gradient_accumulation_steps": 1,
+      "max_grad_norm": 1.0,
+      "validation_split": 0.1,
+      "early_stopping": true,
+      "early_stopping_patience": 2,
+      "eval_steps": 100,
+      "save_steps": 500,
+      "logging_steps": 50,
+      "optimizer": "adamw",
+      "scheduler": "linear",
+      "verbose": true
+    },
+    "device": {
+      "use_cuda": true,
+      "device_ids": [
+        0
+      ],
+      "mixed_precision": "no"
+    },
+    "output_dir": "subtask1/models/rembert",
+    "save_model": true,
+    "save_tokenizer": true,
+    "model_format": "huggingface",
+    "save_best_only": true
+  },
+  "evaluation": {
+    "metrics": [
+      "accuracy",
+      "precision",
+      "recall",
+      "f1",
+      "auc_roc",
+      "confusion_matrix"
+    ],
+    "average": "weighted",
+    "report_per_language": true,
+    "save_predictions": true,
+    "predictions_format": "csv"
+  },
+  "logging": {
+    "log_level": "INFO",
+    "log_dir": "logs",
+    "log_file": "training.log",
+    "save_best_model": true,
+    "checkpoint_dir": "checkpoints"
+  },
+  "general": {
+    "seed": 42,
+    "num_workers": 4,
+    "pin_memory": true,
+    "deterministic": true,
+    "verbose": true,
+    "experiment_name": "subtask1_polarization_detection",
+    "timestamp": true
+  }
+}
+2025-12-11 00:23:42,141 - shared_utils.utils - INFO - Loading data...
+2025-12-11 00:23:42,150 - shared_utils.data_loader - INFO - Loaded 2676 samples from subtask1\data\train\eng.csv
+2025-12-11 00:23:42,167 - shared_utils.data_loader - INFO - Loaded 3380 samples from subtask1\data\train\arb.csv
+2025-12-11 00:23:42,170 - shared_utils.data_loader - INFO - Loaded 133 samples from subtask1\data\test\eng.csv
+2025-12-11 00:23:42,171 - shared_utils.data_loader - INFO - Loaded 169 samples from subtask1\data\test\arb.csv
+2025-12-11 00:23:42,171 - shared_utils.data_loader - WARNING - Split directory not found: subtask1\data\dev
+2025-12-11 00:23:42,171 - shared_utils.utils - INFO - Test set size: 302
+2025-12-11 00:23:42,171 - shared_utils.utils - INFO - 
+============================================================
+2025-12-11 00:23:42,171 - shared_utils.utils - INFO - TRAINING MODELS FOR LANGUAGE: ENG
+2025-12-11 00:23:42,174 - shared_utils.utils - INFO - ============================================================
+2025-12-11 00:23:42,174 - shared_utils.utils - INFO - Train set size (eng): 2676
+2025-12-11 00:23:42,174 - shared_utils.data_loader - INFO - 
+==================================================
+2025-12-11 00:23:42,174 - shared_utils.data_loader - INFO - Statistics for language_eng split
+2025-12-11 00:23:42,174 - shared_utils.data_loader - INFO - ==================================================
+2025-12-11 00:23:42,174 - shared_utils.data_loader - INFO - 
+Language: train
+2025-12-11 00:23:42,181 - shared_utils.data_loader - INFO -   total_samples: 2676
+2025-12-11 00:23:42,181 - shared_utils.data_loader - INFO -   languages: {'eng': 2676}
+2025-12-11 00:23:42,181 - shared_utils.data_loader - INFO -   avg_text_length: 12.379297458893872
+2025-12-11 00:23:42,181 - shared_utils.data_loader - INFO -   min_text_length: 4
+2025-12-11 00:23:42,185 - shared_utils.data_loader - INFO -   max_text_length: 60
+2025-12-11 00:23:42,185 - shared_utils.data_loader - INFO -   polarization_distribution: {0: 1674, 1: 1002}
+2025-12-11 00:23:42,185 - shared_utils.utils - INFO - 
+--- Training SVM for ENG ---
+2025-12-11 00:23:42,185 - shared_utils.utils - INFO - ==================================================
+2025-12-11 00:23:42,185 - shared_utils.utils - INFO - Training SVM Model for ENG
+2025-12-11 00:23:42,185 - shared_utils.utils - INFO - ==================================================
+2025-12-11 00:23:42,221 - shared_utils.utils - INFO - Training on 2676 samples...
+2025-12-11 00:23:43,653 - shared_utils.utils - INFO - Model saved to subtask1/models/svm\svm_eng.joblib
+2025-12-11 00:23:43,653 - shared_utils.utils - INFO - 
+--- Making predictions with SVM for ENG ---
+2025-12-11 00:23:43,689 - shared_utils.utils - INFO - ENG predictions (svm) saved to subtask1/models/svm\test_predictions_eng.csv (133 samples)
+2025-12-11 00:23:43,689 - shared_utils.utils - INFO - 
+--- Training XLM_ROBERTA for ENG ---
+2025-12-11 00:23:43,689 - shared_utils.utils - INFO - ==================================================
+2025-12-11 00:23:43,689 - shared_utils.utils - INFO - Training xlm_roberta Model for ENG
+2025-12-11 00:23:43,689 - shared_utils.utils - INFO - ==================================================
+2025-12-11 00:23:46,102 - shared_utils.utils - INFO - Using device: cpu
+2025-12-11 00:23:46,106 - shared_utils.utils - INFO - Loading pretrained model: xlm-roberta-base
+2025-12-11 00:23:48,186 - shared_utils.utils - INFO - Starting training...

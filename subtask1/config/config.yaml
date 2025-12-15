@@ -1,0 +1,210 @@
+# Subtask 1: Polarization Detection (Binary Classification)
+# Configuration file for all models and training parameters
+
+# ============================================================================
+# DATA CONFIGURATION
+# ============================================================================
+data:
+  train_path: "data/train"
+  test_path: "data/test"
+  dev_path: null  # Optional development set
+  languages: ["eng", "arb"]
+  random_seed: 42
+  stratify: true  # Stratified sampling for train-test split
+
+# ============================================================================
+# TASK CONFIGURATION
+# ============================================================================
+task:
+  task_name: "Subtask1_PolarizationDetection"
+  task_type: "binary_classification"
+  num_classes: 2
+  labels: {0: "non-polarized", 1: "polarized"}
+  label_column: "polarization"
+  text_column: "text"
+  id_column: "id"
+
+# ============================================================================
+# SVM (STATISTICAL MODEL) - BASELINE
+# ============================================================================
+svm:
+  enabled: true
+  model_name: "SVM_TF-IDF"
+  model_type: "sklearn"
+  
+  # Feature extraction
+  vectorizer:
+    type: "tfidf"  # Options: "tfidf", "count", "hashing"
+    max_features: 5000
+    ngram_range: [1, 2]
+    min_df: 2
+    max_df: 0.95
+    lowercase: true
+    stop_words: "english"
+  
+  # SVM parameters
+  svm_params:
+    kernel: "rbf"  # Options: "linear", "rbf", "poly", "sigmoid"
+    C: 1.0  # Regularization parameter
+    gamma: "scale"  # Options: "scale", "auto", or float value
+    class_weight: "balanced"  # Handle class imbalance
+    max_iter: 1000
+    probability: true
+    random_state: 42
+  
+  # Training
+  training:
+    batch_size: null  # N/A for SVM
+    epochs: 1
+    validation_split: 0.1
+    early_stopping: false
+    verbose: true
+  
+  # Output
+  output_dir: "subtask1/models/svm"
+  save_model: true
+  model_format: "pickle"  # Options: "pickle", "joblib"
+
+# ============================================================================
+# XLM-RoBERTa
+# ============================================================================
+xlm_roberta:
+  enabled: true
+  model_name: "xlm-roberta-base"
+  model_type: "transformer"
+  pretrained_model: "xlm-roberta-base"  # Options: "xlm-roberta-base", "xlm-roberta-large"
+  
+  # Tokenizer
+  tokenizer:
+    max_length: 256
+    padding: "max_length"
+    truncation: true
+    add_special_tokens: true
+  
+  # Model architecture
+  model:
+    num_labels: 2
+    hidden_dropout_prob: 0.1
+    attention_probs_dropout_prob: 0.1
+    output_attentions: false
+    output_hidden_states: false
+  
+  # Training parameters
+  training:
+    batch_size: 16
+    epochs: 3
+    learning_rate: 2e-5
+    warmup_steps: 500
+    weight_decay: 0.01
+    gradient_accumulation_steps: 1
+    max_grad_norm: 1.0
+    validation_split: 0.1
+    early_stopping: true
+    early_stopping_patience: 2
+    eval_steps: 100  # Evaluation every N steps
+    save_steps: 500
+    logging_steps: 50
+    optimizer: "adamw"  # Options: "adamw", "adam", "sgd"
+    scheduler: "linear"  # Options: "linear", "cosine", "constant"
+    verbose: true
+  
+  # Device configuration
+  device:
+    use_cuda: true
+    device_ids: [0]  # For multi-GPU, add more IDs
+    mixed_precision: "no"  # Options: "no", "fp16", "bf16"
+  
+  # Output
+  output_dir: "subtask1/models/xlm_roberta"
+  save_model: true
+  save_tokenizer: true
+  model_format: "huggingface"  # Hugging Face format
+  save_best_only: true
+
+# ============================================================================
+# RemBERT
+# ============================================================================
+rembert:
+  enabled: true
+  model_name: "rembert"
+  model_type: "transformer"
+  pretrained_model: "google/rembert"  # RemBERT from Google
+  
+  # Tokenizer
+  tokenizer:
+    max_length: 256
+    padding: "max_length"
+    truncation: true
+    add_special_tokens: true
+  
+  # Model architecture
+  model:
+    num_labels: 2
+    hidden_dropout_prob: 0.1
+    attention_probs_dropout_prob: 0.1
+    output_attentions: false
+    output_hidden_states: false
+  
+  # Training parameters
+  training:
+    batch_size: 16
+    epochs: 3
+    learning_rate: 2e-5
+    warmup_steps: 500
+    weight_decay: 0.01
+    gradient_accumulation_steps: 1
+    max_grad_norm: 1.0
+    validation_split: 0.1
+    early_stopping: true
+    early_stopping_patience: 2
+    eval_steps: 100
+    save_steps: 500
+    logging_steps: 50
+    optimizer: "adamw"
+    scheduler: "linear"
+    verbose: true
+  
+  # Device configuration
+  device:
+    use_cuda: true
+    device_ids: [0]
+    mixed_precision: "no"
+  
+  # Output
+  output_dir: "subtask1/models/rembert"
+  save_model: true
+  save_tokenizer: true
+  model_format: "huggingface"
+  save_best_only: true
+
+# ============================================================================
+# EVALUATION CONFIGURATION
+# ============================================================================
+evaluation:
+  metrics: ["accuracy", "precision", "recall", "f1", "auc_roc", "confusion_matrix"]
+  average: "weighted"  # For multi-class: "weighted", "macro", "micro"
+  report_per_language: true
+  save_predictions: true
+  predictions_format: "csv"  # Options: "csv", "json"
+
+# ============================================================================
+# LOGGING AND CHECKPOINTING
+# ============================================================================
+logging:
+  log_level: "INFO"  # Options: "DEBUG", "INFO", "WARNING", "ERROR"
+  log_dir: "logs"
+  log_file: "training.log"
+  save_best_model: true
+  checkpoint_dir: "checkpoints"
+
+# ============================================================================
+# GENERAL CONFIGURATION
+# ============================================================================
+general:
+  seed: 42
+  num_workers: 4
+  pin_memory: true
+  deterministic: true
+  verbose: true
+  experiment_name: "subtask1_polarization_detection"
+  timestamp: true  # Append timestamp to experiment name

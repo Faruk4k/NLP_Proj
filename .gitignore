@@ -1,0 +1,4 @@
+# Ignore model files
+*.bin
+*.safetensors
+final_models/

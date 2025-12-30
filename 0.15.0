@@ -1,0 +1,37 @@
+Collecting transformers==4.38.2
+  Downloading transformers-4.38.2-py3-none-any.whl (8.5 MB)
+Collecting accelerate
+  Downloading accelerate-1.10.1-py3-none-any.whl (374 kB)
+Collecting huggingface-hub
+  Using cached huggingface_hub-1.2.3-py3-none-any.whl (520 kB)
+Collecting tokenizers
+  Using cached tokenizers-0.22.1-cp39-abi3-win_amd64.whl (2.7 MB)
+Requirement already satisfied: pyyaml>=5.1 in c:\users\georg\anaconda3\lib\site-packages (from transformers==4.38.2) (6.0.3)
+Collecting huggingface-hub
+  Using cached huggingface_hub-0.36.0-py3-none-any.whl (566 kB)
+Collecting tokenizers
+  Downloading tokenizers-0.15.2-cp39-none-win_amd64.whl (2.2 MB)
+Requirement already satisfied: numpy>=1.17 in c:\users\georg\anaconda3\lib\site-packages (from transformers==4.38.2) (1.20.3)
+Collecting safetensors>=0.4.1
+  Using cached safetensors-0.7.0-cp38-abi3-win_amd64.whl (341 kB)
+Requirement already satisfied: tqdm>=4.27 in c:\users\georg\anaconda3\lib\site-packages (from transformers==4.38.2) (4.67.1)
+Requirement already satisfied: requests in c:\users\georg\anaconda3\lib\site-packages (from transformers==4.38.2) (2.32.5)
+Requirement already satisfied: regex!=2019.12.17 in c:\users\georg\anaconda3\lib\site-packages (from transformers==4.38.2) (2021.8.3)
+Requirement already satisfied: packaging>=20.0 in c:\users\georg\anaconda3\lib\site-packages (from transformers==4.38.2) (25.0)
+Requirement already satisfied: filelock in c:\users\georg\anaconda3\lib\site-packages (from transformers==4.38.2) (3.19.1)
+Requirement already satisfied: psutil in c:\users\georg\anaconda3\lib\site-packages (from accelerate) (5.8.0)
+Requirement already satisfied: torch>=2.0.0 in c:\users\georg\anaconda3\lib\site-packages (from accelerate) (2.7.1+cu118)
+Requirement already satisfied: fsspec>=2023.5.0 in c:\users\georg\anaconda3\lib\site-packages (from huggingface-hub) (2025.10.0)
+Requirement already satisfied: typing-extensions>=3.7.4.3 in c:\users\georg\anaconda3\lib\site-packages (from huggingface-hub) (4.15.0)
+Requirement already satisfied: networkx in c:\users\georg\anaconda3\lib\site-packages (from torch>=2.0.0->accelerate) (2.6.3)
+Requirement already satisfied: jinja2 in c:\users\georg\anaconda3\lib\site-packages (from torch>=2.0.0->accelerate) (2.11.3)
+Requirement already satisfied: sympy>=1.13.3 in c:\users\georg\anaconda3\lib\site-packages (from torch>=2.0.0->accelerate) (1.14.0)
+Requirement already satisfied: mpmath<1.4,>=1.1.0 in c:\users\georg\anaconda3\lib\site-packages (from sympy>=1.13.3->torch>=2.0.0->accelerate) (1.2.1)
+Requirement already satisfied: colorama in c:\users\georg\anaconda3\lib\site-packages (from tqdm>=4.27->transformers==4.38.2) (0.4.6)
+Requirement already satisfied: MarkupSafe>=0.23 in c:\users\georg\anaconda3\lib\site-packages (from jinja2->torch>=2.0.0->accelerate) (1.1.1)
+Requirement already satisfied: idna<4,>=2.5 in c:\users\georg\anaconda3\lib\site-packages (from requests->transformers==4.38.2) (3.11)
+Requirement already satisfied: urllib3<3,>=1.21.1 in c:\users\georg\anaconda3\lib\site-packages (from requests->transformers==4.38.2) (2.6.2)
+Requirement already satisfied: certifi>=2017.4.17 in c:\users\georg\anaconda3\lib\site-packages (from requests->transformers==4.38.2) (2025.11.12)
+Requirement already satisfied: charset_normalizer<4,>=2 in c:\users\georg\anaconda3\lib\site-packages (from requests->transformers==4.38.2) (3.4.4)
+Installing collected packages: huggingface-hub, tokenizers, safetensors, transformers, accelerate
+Successfully installed accelerate-1.10.1 huggingface-hub-0.36.0 safetensors-0.7.0 tokenizers-0.15.2 transformers-4.38.2

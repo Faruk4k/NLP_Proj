@@ -36,7 +36,7 @@ task:
 # SVM (STATISTICAL MODEL) - BASELINE
 # ============================================================================
 svm:
-  enabled: true
+  enabled: false
   model_name: "SVM_MultiLabel_TF-IDF"
   model_type: "sklearn_multilabel"
   
@@ -56,7 +56,7 @@ svm:
     C: 1.0
     gamma: "scale"
     class_weight: "balanced"
-    max_iter: 1000
+    max_iter: 15000
     probability: true
     random_state: 42
   

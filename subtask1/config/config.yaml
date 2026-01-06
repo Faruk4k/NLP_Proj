@@ -28,7 +28,7 @@ task:
 # SVM (STATISTICAL MODEL) - BASELINE
 # ============================================================================
 svm:
-  enabled: true
+  enabled: false
   model_name: "SVM_TF-IDF"
   model_type: "sklearn"
   
@@ -48,7 +48,7 @@ svm:
     C: 1.0  # Regularization parameter
     gamma: "scale"  # Options: "scale", "auto", or float value
     class_weight: "balanced"  # Handle class imbalance
-    max_iter: 1000
+    max_iter: 15000
     probability: true
     random_state: 42
   

@@ -1,7 +1,7 @@
 # Ignore model outputs for xlm_roberta in all subtasks
 subtask1/subtask1/models/svm/svm_eng.joblib
-subtask1/subtask1/models/xlm_roberta/eng
-subtask1/models/xlm_roberta/eng
+subtask1/subtask1/models/xlm_roberta
+subtask1/models/xlm_roberta/
 subtask1/models/svm/svm_eng.joblib
 
 

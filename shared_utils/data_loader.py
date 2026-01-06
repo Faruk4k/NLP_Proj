@@ -78,10 +78,10 @@ class DataLoader:
                 logger.warning(f"Language file not found: {filepath}")
                 continue
             
-            # Load CSV
+            #Load CSV
             df = pd.read_csv(filepath)
             
-            # Validate columns
+            #Validate columns
             required_cols = [self.text_column, self.id_column]
             required_cols.extend(self.label_columns)
             
@@ -89,11 +89,11 @@ class DataLoader:
             if missing_cols:
                 raise ValueError(f"Missing columns in {filepath}: {missing_cols}")
             
-            # Clean text
+            #Clean text
             df[self.text_column] = df[self.text_column].astype(str).str.strip()
             df = df[df[self.text_column].str.len() > 0]
             
-            # Add language column
+            #Add language column
             df['language'] = lang
             
             split_data[lang] = df
@@ -166,7 +166,7 @@ class DataLoader:
             "max_text_length": data[self.text_column].str.split().str.len().max(),
         }
         
-        # Add label statistics for each label column
+        #Add label statistics for each label column
         if self.label_columns:
             for col in self.label_columns:
                 if col in data.columns:

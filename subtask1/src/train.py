@@ -377,19 +377,6 @@ def main(args):
             key = f"{model_name}_{language}"
             results[key] = result
     
-   #Summary
-    logger.info("\n" + "="*50)
-    logger.info("TRAINING SUMMARY")
-    logger.info("="*50)
-    
-    for model_name, result in results.items():
-        logger.info(f"\n{model_name}:")
-        for metric, value in result['metrics'].items():
-            if isinstance(value, float):
-                logger.info(f"  {metric}: {value:.4f}")
-            else:
-                logger.info(f"  {metric}: {value}")
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train models for Subtask 1: Polarization Detection")

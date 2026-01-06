@@ -1,4 +1,5 @@
 # Ignore model outputs for xlm_roberta in all subtasks
 subtask1/models/xlm_roberta/
+subtask1/subtask1/models/xlm_roberta/
 subtask2/subtask2/models/xlm_roberta/
 subtask3/subtask3/models/xlm_roberta/

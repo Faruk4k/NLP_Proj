@@ -1,5 +1,4 @@
-# POLAR: Multilingual Polarization Detection - Complete Research Implementation
-
+# POLAR: Multilingual Polarization Detection 
 
 ##  Overview
 three interconnected subtasks:
@@ -111,12 +110,6 @@ NLP_Proj/
 - Mixed precision training
 - GPU/CPU device configuration
 
-### Evaluation
-- Metrics to compute
-- Per-language evaluation
-- Threshold tuning
-
-
 
 ## Training
 
@@ -150,18 +143,6 @@ python subtask3/src/train.py --config subtask3/config/config.yaml
 
 Multi-label classification for 6 manifestation types
 
-## Evaluation Metrics
-
-### Binary Classification (Subtask 1)
-- Accuracy, Precision, Recall, F1-Score
-- AUC-ROC, Confusion Matrix
-- Per-language metrics
-
-### Multi-label Classification (Subtasks 2 & 3)
-- Hamming Loss, Subset Accuracy
-- Weighted Precision, Recall, F1
-- Per-label metrics
-- Per-language metrics
 
 ## Make Predictions
 
@@ -175,7 +156,6 @@ python shared_utils/inference.py \
 
 ## References
 
-- Paper: https://arxiv.org/pdf/2505.20624
 - Competition: https://www.codabench.org/competitions/10669/
 - XLM-RoBERTa: https://huggingface.co/xlm-roberta-base
 - RemBERT: https://huggingface.co/google/rembert
